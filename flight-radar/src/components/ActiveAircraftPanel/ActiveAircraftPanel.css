@@ -1,0 +1,126 @@
+.active-aircraft-panel {
+  width: 100%;
+}
+
+.active-aircraft-header {
+  margin-bottom: 12px;
+}
+
+.active-aircraft-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.aircraft-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.aircraft-card {
+  background: #ffffff;
+  border: 1px solid #d9e2ec;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.input-error {
+  border-color: #d32f2f;
+}
+
+.error-message {
+  margin: 4px 0 0;
+  color: #d32f2f;
+  font-size: 13px;
+}
+
+.plane-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: #555;
+}
+
+.detail-value {
+  text-align: right;
+  color: #222;
+}
+
+.save-button {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.save-button:hover {
+  background: #1d4ed8;
+}
+
+.plane-status {
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.status-israel {
+  color: #1d4ed8;
+  background: #dbeafe;
+}
+
+.status-enemy {
+  color: #b91c1c;
+  background: #fee2e2;
+}
+
+.status-neutral {
+  color: #b45309;
+  background: #fef3c7;
+}
+
+.aircraft-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

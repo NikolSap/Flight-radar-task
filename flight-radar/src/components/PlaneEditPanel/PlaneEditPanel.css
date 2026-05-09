@@ -1,0 +1,91 @@
+.edit-panel {
+  width: 100%;
+}
+
+.edit-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.edit-panel-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.close-button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #c7c7c7;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #333;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button:hover {
+  background: #eeeeee;
+  border-color: #999;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px 10px;
+
+  border: 1px solid #bbb;
+  border-radius: 6px;
+
+  font-size: 14px;
+}
+
+.plane-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  font-size: 14px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding-bottom: 6px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: #555;
+}
+
+.detail-value {
+  text-align: right;
+  color: #222;
+  word-break: break-word;
+}
