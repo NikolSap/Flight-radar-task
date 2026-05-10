@@ -56,6 +56,7 @@ code .
 ```
 
 Make sure VS Code is opened inside the `flight-radar` folder, where `package.json` and `src/` are located.
+
 Open new terminal
 
 ### 5. Install dependencies
