@@ -30,6 +30,12 @@ export const RadarView = observer(() => {
       top: 60,
     })
 
+   const selectedPlane = planeStore.selectedPlane
+
+  const isSelectedPlaneVisible = selectedPlane
+    ? planeStore.visiblePlanes.some((plane) => plane.id === selectedPlane.id)
+    : false
+
   // selects a plane and positions the edit panel near the click location
   const handlePlaneClick = useCallback(
     (planeId: number, position: ClickPosition) => {
@@ -89,34 +95,23 @@ export const RadarView = observer(() => {
 
   // updates the radar layers when visible planes change
   useEffect(() => {
-    const dispose = reaction(
-      () =>({
-        visiblePlanes: planeStore.visiblePlanes.map((plane) => ({
-          id: plane.id,
-          name: plane.name,
-          country: plane.country,
-          lat: plane.geoLocation.lat,
-          lon: plane.geoLocation.lon,
-        })),
-      selectedPlaneId: planeStore.selectedPlaneId,
-      }),
-      ({ visiblePlanes, selectedPlaneId }) => {
-        radarRef.current?.updatePlanes(planeStore.visiblePlanes)
-        
-       if(selectedPlaneId===null){
-        return;
-       }
+  const dispose = reaction(
+    () =>
+      planeStore.visiblePlanes.map((plane) => ({
+        id: plane.id,
+        name: plane.name,
+        country: plane.country,
+        lat: plane.geoLocation.lat,
+        lon: plane.geoLocation.lon,
+      })),
 
-       const isSelectedPlaneVisible =  visiblePlanes.some((plane)=> plane.id === selectedPlaneId)
-       if(!isSelectedPlaneVisible){
-        planeStore.clearSelectedPlane();
-        setPanelPosition(null)
-       }
-      },
-      {
-        delay: 100,
-      },
-    )
+    () => {
+      radarRef.current?.updatePlanes(planeStore.visiblePlanes)
+    },
+    {
+      delay: 100,
+    },
+  )
     return () => {
       dispose()
     }
@@ -166,7 +161,7 @@ export const RadarView = observer(() => {
 
       <canvas ref={canvasRef} className="radar-canvas" />
 
-      {planeStore.selectedPlane && panelPosition  && (
+      {planeStore.selectedPlane && panelPosition  && isSelectedPlaneVisible && (
         <FloatingPanel
           position={panelPosition}
           onDragStart={handleSelectedPlanePanelDragStart}
