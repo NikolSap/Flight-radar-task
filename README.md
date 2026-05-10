@@ -34,34 +34,42 @@ src/
 ### 1. Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/NikolSap/Flight-radar-task.git
 ```
 
-### 2. Navigate into the project folder
+### 2. Navigate into the repository folder
 
 ```bash
- cd Flight-radar-task
+cd Flight-radar-task
 ```
 
-### 3. Navigate into the project
+### 3. Navigate into the project folder
 
 ```bash
- cd flight-radar
+cd flight-radar
 ```
 
-### 4. Install dependencies
+### 4. Open the project in VS Code
+
+```bash
+code .
+```
+
+Make sure VS Code is opened inside the `flight-radar` folder, where `package.json` and `src/` are located.
+
+### 5. Install dependencies
 
 ```bash
 npm install
 ```
 
-### 5. Run the development server
+### 6. Run the development server
 
 ```bash
 npm run dev
 ```
 
-### 6. Open the app in the browser
+### 7. Open the app in the browser
 
 After running the project, open the local URL shown in the terminal.
 
@@ -70,6 +78,9 @@ Usually it will be:
 ```text
 http://localhost:5173
 ```
+
+You can open the same local URL in multiple browser tabs to test SharedWorker synchronization.  
+When a plane name is updated in one tab, the change is reflected in the other open tabs.
 
 ## Screenshots
 
