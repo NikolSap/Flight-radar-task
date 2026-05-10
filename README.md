@@ -64,3 +64,13 @@ Usually it will be:
 ```text
 http://localhost:5173
 ```
+
+## Screenshots
+
+### Selected Plane Panel
+
+![Selected Plane Panel](./flight-radar/screenshots/Screenshot 2026-05-10 122003.png)
+
+### Active Aircraft Panel
+
+![Active Aircraft Panel](./flight-radar/screenshots/image.png)
