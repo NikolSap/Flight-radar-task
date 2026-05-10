@@ -75,8 +75,8 @@ http://localhost:5173
 
 ### Selected Plane Panel
 
-![Selected Plane Panel](./flight-radar/screenshots/Screenshot 2026-05-10 122003.png)
+![Selected Plane Panel](./flight-radar/screenshots/selectedPlane.png)
 
 ### Active Aircraft Panel
 
-![Active Aircraft Panel](./flight-radar/screenshots/image.png)
+![Active Aircraft Panel](./flight-radar/screenshots/activepanes.png)
