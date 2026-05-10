@@ -13,14 +13,14 @@ export const PlaneEditPanel = observer(() => {
 
   useEffect(() => {
     if (!selectedPlane) {
-      return null
+      return;
     }
     setPlaneDraftName(selectedPlane.name)
     setErrorMessage("")
   }, [selectedPlane?.id])
 
   if (!selectedPlane) {
-    return null
+    return;
   }
 
   const handleClosePanel = () => {
@@ -92,11 +92,7 @@ export const PlaneEditPanel = observer(() => {
         </div>
       </div>
       <div className="button-wrapper">
-        <button
-          type="button"
-          className="save-button"
-          onClick={handleSave}
-        >
+        <button type="button" className="save-button" onClick={handleSave}>
           Save
         </button>
       </div>

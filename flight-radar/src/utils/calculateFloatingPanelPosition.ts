@@ -22,19 +22,27 @@ export function calculateFloatingPanelPosition(
   containerRect: DOMRect,
   options: PanelPositionOptions = {},
 ): PanelPosition {
-  let left = clickPosition.x + options.horizontalOffset
-  let top = clickPosition.y + options.verticalOffset
+  const {
+    panelWidth = 360,
+    panelHeight = 300,
+    horizontalOffset = 12,
+    verticalOffset = 12,
+    margin = 12,
+  } = options
 
-  if (left + options.panelWidth > containerRect.width) {
-    left = clickPosition.x - options.panelWidth - options.horizontalOffset
+  let left = clickPosition.x + horizontalOffset
+  let top = clickPosition.y + verticalOffset
+
+  if (left + panelWidth > containerRect.width) {
+    left = clickPosition.x - panelWidth - horizontalOffset
   }
 
-  if (top + options.panelHeight > containerRect.height) {
-    top = containerRect.height - options.panelHeight - options.margin
+  if (top + panelHeight > containerRect.height) {
+    top = containerRect.height - panelHeight - margin
   }
 
-  if (top < options.margin) {
-    top = options.margin
+  if (top < margin) {
+    top = margin
   }
 
   return { left, top }

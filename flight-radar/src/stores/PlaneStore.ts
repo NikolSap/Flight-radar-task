@@ -71,13 +71,15 @@ export class PlaneStore {
 
   // Returns only planes that are inside the current viewport bounds
   get visiblePlanes() {
-    if (!this.viewportBounds) {
+    const bounds = this.viewportBounds
+
+    if (!bounds) {
       return this.planes
     }
 
     return this.planes.filter((plane) => {
       const { lat, lon } = plane.geoLocation
-      const { minLat, maxLat, minLon, maxLon } = this.viewportBounds
+      const { minLat, maxLat, minLon, maxLon } = bounds
 
       return lat >= minLat && lat <= maxLat && lon >= minLon && lon <= maxLon
     })
