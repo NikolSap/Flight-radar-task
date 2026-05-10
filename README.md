@@ -64,3 +64,6 @@ Usually it will be:
 ```text
 http://localhost:5173
 ```
+
+You can open the same local URL in multiple browser tabs to test SharedWorker synchronization.  
+When a plane name is updated in one tab, the change is reflected in the other open tabs.
