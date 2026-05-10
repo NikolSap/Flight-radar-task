@@ -65,10 +65,3 @@ Usually it will be:
 http://localhost:5173
 ```
 
-## Build for Production
-
-To create a production-ready build:
-
-```bash
-npm run build
-```
