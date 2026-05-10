@@ -12,6 +12,9 @@ import {
 } from "../../utils/calculateFloatingPanelPosition"
 import { FLOATING_PANEL_POSITION_OPTIONS } from "../../constants/radarViewConstants"
 import { ActiveAircraftPanel } from "../ActiveAircraftPanel/ActiveAircraftPanel"
+import { FloatingPanel } from "../FloatingPanel/FloatingPanel"
+import { startPanelDrag } from "../../utils/startPanelDrag"
+
 import "./RadarView.css"
 
 export const RadarView = observer(() => {
@@ -22,10 +25,10 @@ export const RadarView = observer(() => {
   const [isAircraftPanelOpen, setIsAircraftPanelOpen] = useState(false)
   const lastClickPositionRef = useRef<ClickPosition | null>(null)
 
-  const [aircraftPanelPosition, setAircraftPanelPosition] = useState({
-    left: 18,
-    top: 60,
-  })
+const [aircraftPanelPosition, setAircraftPanelPosition] = useState<PanelPosition>({
+  left: 18,
+  top: 60,
+})
 
   // selects a plane and positions the edit panel near the click location
   const handlePlaneClick = useCallback(
@@ -123,33 +126,23 @@ export const RadarView = observer(() => {
     }
   }, [])
 
-  // handles dragging of the active aircraft floating panel
+
   const handleAircraftPanelDragStart = (
-    event: React.MouseEvent<HTMLDivElement>,
-  ) => {
-    const startX = event.clientX
-    const startY = event.clientY
-    const startLeft = aircraftPanelPosition.left
-    const startTop = aircraftPanelPosition.top
+  event: React.MouseEvent<HTMLDivElement>,
+) => {
+  startPanelDrag(event, aircraftPanelPosition, setAircraftPanelPosition)
+}
 
-    const handleMouseMove = (moveEvent: MouseEvent) => {
-      const deltaX = moveEvent.clientX - startX
-      const deltaY = moveEvent.clientY - startY
-
-      setAircraftPanelPosition({
-        left: startLeft + deltaX,
-        top: startTop + deltaY,
-      })
-    }
-
-    const handleMouseUp = () => {
-      window.removeEventListener("mousemove", handleMouseMove)
-      window.removeEventListener("mouseup", handleMouseUp)
-    }
-
-    window.addEventListener("mousemove", handleMouseMove)
-    window.addEventListener("mouseup", handleMouseUp)
+const handleSelectedPlanePanelDragStart = (
+  event: React.MouseEvent<HTMLDivElement>,
+) => {
+  if (!panelPosition) {
+    return
   }
+
+  startPanelDrag(event, panelPosition, setPanelPosition)
+}
+
 
   return (
     <div
@@ -171,43 +164,23 @@ export const RadarView = observer(() => {
       />
 
       {planeStore.selectedPlane && panelPosition && (
-        <div
-          className="floating-panel"
-          style={{
-            left: panelPosition.left,
-            top: panelPosition.top,
-          }}
-        >
-          <PlaneEditPanel />
-        </div>
+        <FloatingPanel
+        position={panelPosition}
+        onDragStart={handleSelectedPlanePanelDragStart}
+      >
+        <PlaneEditPanel />
+      </FloatingPanel>
       )}
 
       {isAircraftPanelOpen && (
-        <div
-          className="floating-panel"
-          style={{
-            left: aircraftPanelPosition.left,
-            top: aircraftPanelPosition.top,
-          }}
-        >
-          <div
-            className="floating-panel-drag-handle"
-            onMouseDown={handleAircraftPanelDragStart}
-          >
-            Drag panel
-            <button
-              type="button"
-              className="close-button"
-              onClick={() => setIsAircraftPanelOpen(false)}
-              aria-label="Close plane details"
-            >
-              ×
-            </button>
-          </div>
-
-          <ActiveAircraftPanel />
-        </div>
-      )}
+    <FloatingPanel
+      position={aircraftPanelPosition}
+      onDragStart={handleAircraftPanelDragStart}
+      onClose={() => setIsAircraftPanelOpen(false)}
+    >
+      <ActiveAircraftPanel />
+    </FloatingPanel>
+  )}
     </div>
   )
 })

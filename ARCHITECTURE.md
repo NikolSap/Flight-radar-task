@@ -16,6 +16,7 @@ The project is separated into clear layers:
 - Domain files define plane-related types and logic
 - Utils contain reusable helper functions
 - Constants contain reusable configuration values
+- Reusable UI components and utilities reduce duplicated panel and drag logic
 
 ## Application Data Flow
 
@@ -145,6 +146,20 @@ Responsibilities:
 - Validates empty plane names
 - Saves name updates through the MobX store
 - Updates are synchronized with the radar and across browser tabs through the SharedWorker
+
+#### `FloatingPanel.tsx`
+
+Reusable floating panel component used for panels displayed above the radar map.
+
+Responsibilities:
+
+- Renders a floating panel at a given position
+- Provides a shared drag handle structure
+- Optionally displays a close button
+- Wraps panel content using `children`
+- Keeps repeated floating panel layout outside of `RadarView`
+
+This improves maintainability because both the selected plane panel and the active aircraft panel can use the same reusable component.
 
 ### `stores/`
 
@@ -286,6 +301,19 @@ Purpose:
 
 - Keeps panel positioning logic outside React components
 - Prevents panels from overflowing outside the radar container
+
+#### `startPanelDrag.ts`
+
+Reusable utility function for handling floating panel drag behavior.
+
+Purpose:
+
+- Keeps drag logic outside React components
+- Avoids duplicating the same drag code for multiple panels
+- Calculates mouse movement using the initial mouse position and panel position
+- Updates the panel position through a callback
+
+This keeps `RadarView` cleaner and makes the drag behavior reusable for different floating panels.
 
 ### `constants/`
 
