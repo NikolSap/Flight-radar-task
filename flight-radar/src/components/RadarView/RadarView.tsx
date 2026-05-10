@@ -102,6 +102,7 @@ export const RadarView = observer(() => {
       }),
       ({ visiblePlanes, selectedPlaneId }) => {
         radarRef.current?.updatePlanes(planeStore.visiblePlanes)
+        
        if(selectedPlaneId===null){
         return;
        }
