@@ -24,11 +24,11 @@ export const RadarView = observer(() => {
   const [panelPosition, setPanelPosition] = useState<PanelPosition | null>(null)
   const [isAircraftPanelOpen, setIsAircraftPanelOpen] = useState(false)
   const lastClickPositionRef = useRef<ClickPosition | null>(null)
-
-const [aircraftPanelPosition, setAircraftPanelPosition] = useState<PanelPosition>({
-  left: 18,
-  top: 60,
-})
+  const [aircraftPanelPosition, setAircraftPanelPosition] =
+    useState<PanelPosition>({
+      left: 18,
+      top: 60,
+    })
 
   // selects a plane and positions the edit panel near the click location
   const handlePlaneClick = useCallback(
@@ -90,17 +90,27 @@ const [aircraftPanelPosition, setAircraftPanelPosition] = useState<PanelPosition
   // updates the radar layers when visible planes change
   useEffect(() => {
     const dispose = reaction(
-      () =>
-        planeStore.visiblePlanes.map((plane) => ({
+      () =>({
+        visiblePlanes: planeStore.visiblePlanes.map((plane) => ({
           id: plane.id,
           name: plane.name,
           country: plane.country,
           lat: plane.geoLocation.lat,
           lon: plane.geoLocation.lon,
         })),
-
-      () => {
+      selectedPlaneId: planeStore.selectedPlaneId,
+      }),
+      ({ visiblePlanes, selectedPlaneId }) => {
         radarRef.current?.updatePlanes(planeStore.visiblePlanes)
+       if(selectedPlaneId===null){
+        return;
+       }
+
+       const isSelectedPlaneVisible =  visiblePlanes.some((plane)=> plane.id === selectedPlaneId)
+       if(!isSelectedPlaneVisible){
+        planeStore.clearSelectedPlane();
+        setPanelPosition(null)
+       }
       },
       {
         delay: 100,
@@ -126,29 +136,24 @@ const [aircraftPanelPosition, setAircraftPanelPosition] = useState<PanelPosition
     }
   }, [])
 
-
   const handleAircraftPanelDragStart = (
-  event: React.MouseEvent<HTMLDivElement>,
-) => {
-  startPanelDrag(event, aircraftPanelPosition, setAircraftPanelPosition)
-}
-
-const handleSelectedPlanePanelDragStart = (
-  event: React.MouseEvent<HTMLDivElement>,
-) => {
-  if (!panelPosition) {
-    return
+    event: React.MouseEvent<HTMLDivElement>,
+  ) => {
+    startPanelDrag(event, aircraftPanelPosition, setAircraftPanelPosition)
   }
 
-  startPanelDrag(event, panelPosition, setPanelPosition)
-}
+  const handleSelectedPlanePanelDragStart = (
+    event: React.MouseEvent<HTMLDivElement>,
+  ) => {
+    if (!panelPosition) {
+      return
+    }
 
+    startPanelDrag(event, panelPosition, setPanelPosition)
+  }
 
   return (
-    <div
-      ref={containerRef}
-      className="radar-container"
-    >
+    <div ref={containerRef} className="radar-container">
       <div className="radar-title">2D Flight Radar</div>
       <button
         type="button"
@@ -158,29 +163,26 @@ const handleSelectedPlanePanelDragStart = (
         {isAircraftPanelOpen ? "Close Active Aircraft" : "Active Aircraft"}
       </button>
 
-      <canvas
-        ref={canvasRef}
-        className="radar-canvas"
-      />
+      <canvas ref={canvasRef} className="radar-canvas" />
 
-      {planeStore.selectedPlane && panelPosition && (
+      {planeStore.selectedPlane && panelPosition  && (
         <FloatingPanel
-        position={panelPosition}
-        onDragStart={handleSelectedPlanePanelDragStart}
-      >
-        <PlaneEditPanel />
-      </FloatingPanel>
+          position={panelPosition}
+          onDragStart={handleSelectedPlanePanelDragStart}
+        >
+          <PlaneEditPanel />
+        </FloatingPanel>
       )}
 
       {isAircraftPanelOpen && (
-    <FloatingPanel
-      position={aircraftPanelPosition}
-      onDragStart={handleAircraftPanelDragStart}
-      onClose={() => setIsAircraftPanelOpen(false)}
-    >
-      <ActiveAircraftPanel />
-    </FloatingPanel>
-  )}
+        <FloatingPanel
+          position={aircraftPanelPosition}
+          onDragStart={handleAircraftPanelDragStart}
+          onClose={() => setIsAircraftPanelOpen(false)}
+        >
+          <ActiveAircraftPanel />
+        </FloatingPanel>
+      )}
     </div>
   )
 })
