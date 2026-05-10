@@ -40,22 +40,28 @@ git clone <repository-url>
 ### 2. Navigate into the project folder
 
 ```bash
-cd flight-radar
+ cd Flight-radar-task
 ```
 
-### 3. Install dependencies
+### 3. Navigate into the project
+
+```bash
+ cd flight-radar
+```
+
+### 4. Install dependencies
 
 ```bash
 npm install
 ```
 
-### 4. Run the development server
+### 5. Run the development server
 
 ```bash
 npm run dev
 ```
 
-### 5. Open the app in the browser
+### 6. Open the app in the browser
 
 After running the project, open the local URL shown in the terminal.
 
